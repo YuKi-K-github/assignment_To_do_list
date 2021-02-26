@@ -11,4 +11,4 @@
 |
 */
 
-
+Route::resource('/home','ListController');
