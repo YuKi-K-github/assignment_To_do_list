@@ -5,11 +5,28 @@
     <h1>To do list</h1>
 </div>
 <div class="list">
-
+<table>
+    <tr>
+        <td>ID</td>
+        <td>コメント</td>
+        <td>状態</td>
+    </tr>
+    @forelse($lists as $list)
+        <tr>
+            <td>{{ $id++ }}</td>
+            <td>{{ $list->task }}</td>
+            <td><input type="submit" value="作業中"></td>
+            <td><input type="submit" value="削除"></td>
+        </tr>
+    @empty
+        <td>タスクはありません。</td>
+    @endforelse
+</table>
 </div>
 <div class="add_task">
-    新規タスクの追加
-    <form method="POST" action="{{ url('/') }}">
+    <h3>新規タスクの追加</h3>
+    <form method="post" action="{{ url('/home') }}">
+        @csrf
         <input type="text" name="task">
         <input type="submit" value="追加">
     </form>
