@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\To_do_list;
+use App\Http\Requests\ListRequest;
 
 class ListController extends Controller
 {
@@ -14,12 +15,12 @@ class ListController extends Controller
      */
     public function index()
     {
-        $lists = DB::table('to_do_lists')->get();
-        $id = 0;
+        $lists = To_do_list::all();
+        $list_id = 0;
 
-        return view('home',[
+        return view('list',[
             'lists' => $lists,
-            'id' => $id,
+            'list_id' => $list_id,
         ]);
     }
 
@@ -39,16 +40,15 @@ class ListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ListRequest $request)
     {
-        $list = new \App\Todolist;
+        $list = new To_do_list;
+        $form = $request->all();
 
-        $list->task = $request->task;
-        $list->status = 0;
+        unset($form['_token']);
+        $list->fill($form)->save();
 
-        $list->save();
-
-        return redirect('/home');
+        return redirect('/list');
     }
 
     /**
