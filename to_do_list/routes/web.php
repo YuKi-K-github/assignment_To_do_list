@@ -11,4 +11,4 @@
 |
 */
 
-Route::resource('/list','ListController');
+Route::resource('/lists','ListController');

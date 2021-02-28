@@ -48,7 +48,7 @@ class ListController extends Controller
         unset($form['_token']);
         $list->fill($form)->save();
 
-        return redirect('/list');
+        return redirect('/lists');
     }
 
     /**
@@ -93,6 +93,7 @@ class ListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        To_do_list::find($id)->delete();
+        return redirect('/lists');
     }
 }
