@@ -19,13 +19,17 @@
             <td>{{ $list_id++ }}</td>
             <td>{{ $list->task }}</td>
             <td>
-                
-                    <input type="submit" value="作業中">
-                
+                <form method="get" action="{{ url('/lists/'.$list->id.'/edit') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    @if($list->status === 0)
+                        <input type="submit" value="作業中">
+                    @elseif($list->status === 1)
+                        <input type="submit" value="完了">
+                    @endif
+                </form>
             </td>
             <td>
                 <form method="post" action="{{ url('/lists/'.$list->id) }}">
-                    @csrf
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="submit" value="削除">

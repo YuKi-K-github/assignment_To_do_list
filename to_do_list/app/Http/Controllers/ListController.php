@@ -70,7 +70,16 @@ class ListController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit_status = To_do_list::find($id);
+
+        if($edit_status->status === 0){
+            $edit_status->status = 1;
+        }elseif($edit_status->status === 1){
+            $edit_status->status = 0;
+        };
+        $edit_status->save();
+
+        return redirect('/lists');
     }
 
     /**
