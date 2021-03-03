@@ -16,12 +16,8 @@ class ListController extends Controller
     public function index()
     {
         $lists = To_do_list::all();
-        $list_id = 0;
 
-        return view('list',[
-            'lists' => $lists,
-            'list_id' => $list_id,
-        ]);
+        return view('/list', compact('lists'));
     }
 
     /**

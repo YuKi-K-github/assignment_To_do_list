@@ -16,7 +16,7 @@
     </tr>
     @forelse($lists as $list)
         <tr>
-            <td>{{ $list_id++ }}</td>
+            <td>{{$loop->iteration}}</td>
             <td>{{ $list->task }}</td>
             <td>
                 
@@ -25,7 +25,6 @@
             </td>
             <td>
                 <form method="post" action="{{ url('/lists/'.$list->id) }}">
-                    @csrf
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="submit" value="削除">
