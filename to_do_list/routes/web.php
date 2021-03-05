@@ -11,4 +11,4 @@
 |
 */
 
-Route::resource('/lists','ListController');
+Route::resource('/lists','ListController', ['only' => ['index', 'store', 'update', 'destroy']]);

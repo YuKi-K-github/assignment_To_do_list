@@ -19,7 +19,8 @@
             <td>{{$loop->iteration}}</td>
             <td>{{ $list->task }}</td>
             <td>
-                <form method="get" action="{{ url('/lists/'.$list->id.'/edit') }}">
+                <form method="post" action="{{ url('/lists/'.$list->id ) }}">
+                    <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @if($list->status === 0)
                         <input type="submit" value="作業中">
