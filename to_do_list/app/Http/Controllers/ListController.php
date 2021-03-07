@@ -16,8 +16,10 @@ class ListController extends Controller
     public function index()
     {
         $lists = To_do_list::all();
+        $progressing_list = To_do_list::where('status', 0)->get();
+        $done_list = To_do_list::where('status', 1)->get();
 
-        return view('/list', compact('lists'));
+        return view('/list', compact('lists', 'progressing_list', 'done_list'));
     }
 
     /**
@@ -50,7 +52,18 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+    public function show($status)
+    {
+        if($status === 'everything'){
+            $lists = To_do_list::all();
+        }elseif($status === 'progressing'){
+            $lists = To_do_list::where('status', 0);
+        }elseif($status === 'done'){
+            $lists = To_do_list::where('status', 1);
+        }
+
+        return view('/list', compact('lists'));
+    }
 
     /**
      * Show the form for editing the specified resource.
