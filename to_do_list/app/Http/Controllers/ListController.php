@@ -52,18 +52,6 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($status)
-    {
-        if($status === 'everything'){
-            $lists = To_do_list::all();
-        }elseif($status === 'progressing'){
-            $lists = To_do_list::where('status', 0);
-        }elseif($status === 'done'){
-            $lists = To_do_list::where('status', 1);
-        }
-
-        return view('/list', compact('lists'));
-    }
 
     /**
      * Show the form for editing the specified resource.

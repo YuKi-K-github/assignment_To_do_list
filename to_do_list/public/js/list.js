@@ -1,7 +1,7 @@
 $(function(){
 
     $('input[name="select_status"]').click(function() {
-        var result = $(this).attr('id');
+        const result = $(this).attr('id');
         if (result == 'everything') {
             document.getElementById('status_everything').style.display = 'block'
             document.getElementById('status_progressing').style.display = 'none'
@@ -17,6 +17,6 @@ $(function(){
             document.getElementById('status_progressing').style.display = 'none'
             document.getElementById('status_done').style.display = 'block'
         }
-      });
+    });
 
 });
