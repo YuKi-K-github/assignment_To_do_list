@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\To_do_list;
+use App\Http\Requests\ListRequest;
 
 class ListController extends Controller
 {
@@ -13,7 +15,9 @@ class ListController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $lists = To_do_list::all();
+
+        return view('/list', compact('lists'));
     }
 
     /**
@@ -21,10 +25,7 @@ class ListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -32,9 +33,15 @@ class ListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ListRequest $request)
     {
-        //
+        $list = new To_do_list;
+        $form = $request->all();
+
+        unset($form['_token']);
+        $list->fill($form)->save();
+
+        return redirect('/lists');
     }
 
     /**
@@ -43,10 +50,7 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -54,11 +58,7 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -66,9 +66,18 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $edit_status = To_do_list::find($id);
+
+        if($edit_status->status === 0){
+            $edit_status->status = 1;
+        }elseif($edit_status->status === 1){
+            $edit_status->status = 0;
+        };
+        $edit_status->save();
+
+        return redirect('/lists');
     }
 
     /**
@@ -79,6 +88,7 @@ class ListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        To_do_list::find($id)->delete();
+        return redirect('/lists');
     }
 }
